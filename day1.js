@@ -1,5 +1,5 @@
 function findCalCount(str) {
-    let max = 0;
+    let max = [0,0,0];
     let curr = 0;
     var splitted = str.split(/\n/)
     
@@ -8,12 +8,25 @@ function findCalCount(str) {
         if(capture){
             curr += capture;
         }else {
-            max = (curr > max) ? curr : max;
+            // only top 3
+            for(i=0;i<3;i++){
+                let maxVal = max[i];
+                if(curr > maxVal){
+                    max[i] = curr;
+                    break;
+                }
+            }
+            //max = (curr > max) ? curr : max;
             curr = 0;
         }
     });
 
-    console.log('Max cal count: '+max);
+    const sum = max.reduce((accumulator, value) => {
+        return accumulator + value;
+      }, 0);
+    
+    console.log('Max counts: '+max);
+    console.log('Sum cal count: '+sum);
 }
 
 
