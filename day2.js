@@ -18,17 +18,51 @@ function scoreRPS(strategy) {
         let them = play[0];
         let me = play[1];
 
+        let myPlay = determinePlay(them, me);
+
         // add hand played
-        totalScore += playScore.get(me);
+        totalScore += playScore.get(myPlay);
         // add winner score
-        totalScore += determineScore(them, me);
+        totalScore += determineScore(them, myPlay);
 
         console.log('They: '+them);
-        console.log('Me: '+me);
-        console.log('Score: '+playScore.get(me) +' '+ determineScore(them, me));
+        console.log('Me: '+myPlay);
+        console.log('Score: '+playScore.get(myPlay) +' '+ determineScore(them, myPlay));
     });
 
     console.log('Total Score: '+totalScore);
+}
+
+function determinePlay(them, me){
+    // in this context me = X means you need to lose, Y means you need to end the round in a draw, and Z means you need to win
+    if(them == 'A') {
+        switch (me) {
+            case 'X':
+                return 'Z';
+            case 'Y':
+                return 'X';
+            case 'Z':
+                return 'Y';
+        }
+    } else if(them == 'B') {
+        switch (me) {
+            case 'X':
+                return 'X';
+            case 'Y':
+                return 'Y';
+            case 'Z':
+                return 'Z';
+        }
+    } else if(them == 'C') {
+        switch (me) {
+            case 'X':
+                return 'Y';
+            case 'Y':
+                return 'Z';
+            case 'Z':
+                return 'X';
+        }
+    }
 }
 
 function determineScore(them, me){
@@ -2565,5 +2599,11 @@ B X
 B Y
 C X
 B X`;
+
+
+var ex =
+`A Y
+B X
+C Z`;
 
 scoreRPS(strat);
